@@ -1,0 +1,11 @@
+
+if [ $1 -eq 0 ] ; then 
+        # Package removal, not upgrade 
+        /usr/bin/systemctl --no-reload disable postfix.service > /dev/null 2>&1 || : 
+        /usr/bin/systemctl stop postfix.service > /dev/null 2>&1 || : 
+fi 
+
+if [ "$1" = 0 ]; then
+    /usr/sbin/alternatives --remove mta /usr/sbin/sendmail.postfix
+fi
+exit 0
