@@ -1,0 +1,6 @@
+# Add user and groups if necessary
+/usr/sbin/groupadd -g 90 -r postdrop 2>/dev/null
+/usr/sbin/groupadd -g 89 -r postfix 2>/dev/null
+/usr/sbin/groupadd -g 12 -r mail 2>/dev/null
+/usr/sbin/useradd -d /var/spool/postfix -s /sbin/nologin -g postfix -G mail -M -r -u 89 postfix 2>/dev/null
+exit 0
