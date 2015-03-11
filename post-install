@@ -1,0 +1,38 @@
+chown -R postfix:postfix /var/spool/postfix > /dev/null
+
+if [ $1 -eq 1 ] ; then 
+        # Initial installation 
+        /usr/bin/systemctl preset postfix.service > /dev/null 2>&1 || : 
+fi 
+
+# upgrade configuration files if necessary
+/usr/sbin/postfix set-permissions upgrade-configuration > /dev/null \
+	daemon_directory=/usr/libexec/postfix \
+	command_directory=/usr/sbin \
+	mail_owner=postfix \
+	setgid_group=postdrop \
+	manpage_directory=/usr/share/man \
+	sample_directory=/usr/share/doc/postfix-2.10.1/samples \
+	readme_directory=/usr/share/doc/postfix-2.10.1/README_FILES &> /dev/null
+
+/usr/sbin/alternatives --install /usr/sbin/sendmail mta /usr/sbin/sendmail.postfix 30 \
+	--slave /usr/bin/mailq mta-mailq /usr/bin/mailq.postfix \
+	--slave /usr/bin/newaliases mta-newaliases /usr/bin/newaliases.postfix \
+	--slave /etc/pam.d/smtp mta-pam /etc/pam.d/smtp.postfix \
+	--slave /usr/bin/rmail mta-rmail /usr/bin/rmail.postfix \
+	--slave /usr/lib/sendmail mta-sendmail /usr/lib/sendmail.postfix \
+	--slave /usr/share/man/man1/mailq.1.gz mta-mailqman /usr/share/man/man1/mailq.postfix.1.gz \
+	--slave /usr/share/man/man1/newaliases.1.gz mta-newaliasesman /usr/share/man/man1/newaliases.postfix.1.gz \
+	--slave /usr/share/man/man8/sendmail.8.gz mta-sendmailman /usr/share/man/man1/sendmail.postfix.1.gz \
+	--slave /usr/share/man/man5/aliases.5.gz mta-aliasesman /usr/share/man/man5/aliases.postfix.5.gz \
+	--initscript postfix
+
+# Move sasl config to new location
+if [ -f /usr/lib64/sasl2/smtpd.conf ]; then
+	mv -f /usr/lib64/sasl2/smtpd.conf /etc/sasl2/smtpd.conf
+	/sbin/restorecon /etc/sasl2/smtpd.conf 2> /dev/null
+fi
+
+systemctl daemon-reload
+
+exit 0
