@@ -23,11 +23,11 @@ This will ensure that this package is installed in case of other Packages are pr
 The recipe will:
 
 * Fetch the required version of Postfix from http://de.postfix.org/ftpmirror/official/.
-* Configures and compiles Postfix with pgsql support, LDAP, SMTP AUTH (SASL).
-* Copies the executables and other required files created during the 'make' to required directories.
+* Configure and compile Postfix with pgsql support, LDAP, SMTP AUTH (SASL).
+* Copy the executables and other required files created during the 'make' to required directories.
 * The above steps will ask for directory paths, just use the default path in the promt.
-* Creates Upstart script for Postfix daemon.
-* Drops the pre, post install/un-install scripts.
+* Create Upstart script for Postfix daemon.
+* Drop the pre, post install/un-install scripts.
 * Finally, packages everything into an RPM. 
 
 ## Quick Start
@@ -57,7 +57,7 @@ The build server must have following packages installed:
 NOTE: The recipe has been tested (and can only create) with creating packages for 'el7', 'x86_64' architecture packages.
 
 ### Building a package
-You need to specify the version of Tarsnap package to be fetched and built.
+You need to specify the version of Postfix package to be fetched and built.
 
 ```fpm
 BUILD_VERSION=2.11.1 fpm-cook
