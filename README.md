@@ -72,4 +72,4 @@ BUILD_VERSION=2.11.1 BUILD_REV=1.el7 fpm-cook
 ### Related
 
 * FPM Cookery: https://github.com/bernd/fpm-cookery
-* Tarsnap: http://tarsnap.com
+* Postfix: http://www.postfix.org/

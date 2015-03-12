@@ -1,7 +1,7 @@
 # class Postfix < FPM::Cookery::Recipe
 # AUTHOR Mansab Uppal
 # Official site: http://mansab.upp.al
-# Official git repository: https://github.com/mansab/puppet-tarsnap
+# Official git repository: https://github.com/mansab/postfix-pgsql
 # License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>.
 # See README.md for more information.
 # 
